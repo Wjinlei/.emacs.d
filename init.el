@@ -71,55 +71,55 @@ decrease this. If you experience stuttering, increase this.")
 
 ;; Packages
 ;; Without this comment Emacs25 adds (package-initialize) here
-;(require 'init-package)
+(require 'init-package)
 
 ;; Preferences
-;(require 'init-basic)
-;(require 'init-hydra)
+(require 'init-basic)
+(require 'init-hydra)
 ;
-;(require 'init-ui)
-;(require 'init-edit)
-;(require 'init-ivy)
+(require 'init-ui)
+(require 'init-edit)
+(require 'init-ivy)
 ;(require 'init-company)
-;(require 'init-yasnippet)
+(require 'init-yasnippet)
 ;
 ;(require 'init-bookmark)
-;(require 'init-calendar)
+(require 'init-calendar)
 ;(require 'init-dashboard)
-;(require 'init-dired)
-;(require 'init-highlight)
+(require 'init-dired)
+(require 'init-highlight)
 ;(require 'init-ibuffer)
-;(require 'init-kill-ring)
+(require 'init-kill-ring)
 ;(require 'init-persp)
-;(require 'init-window)
+(require 'init-window)
 ;(require 'init-treemacs)
 ;
-;(require 'init-eshell)
-;(require 'init-shell)
+(require 'init-eshell)
+(require 'init-shell)
 ;
-;(require 'init-markdown)
-;(require 'init-org)
+(require 'init-markdown)
+(require 'init-org)
 ;(require 'init-reader)
 ;
 ;(require 'init-docker)
-;(require 'init-utils)
+(require 'init-utils)
 
 ;; Programming
-;(require 'init-vcs)
-;(require 'init-flycheck)
-;(require 'init-projectile)
-;(require 'init-lsp)
+(require 'init-vcs)
+(require 'init-flycheck)
+(require 'init-projectile)
+(require 'init-lsp)
 ;
 ;(require 'init-prog)
 ;(require 'init-elisp)
-;(require 'init-c)
-;(require 'init-go)
+(require 'init-c)
+(require 'init-go)
 ;(require 'init-rust)
-;(require 'init-python)
+(require 'init-python)
 ;(require 'init-ruby)
 ;(require 'init-dart)
 ;(require 'init-elixir)
-;(require 'init-web)
+(require 'init-web)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init.el ends here
