@@ -108,16 +108,16 @@ of the buffer text to be displayed in the popup"
                    `(which-key-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face nil t)))))))))))
 
 ;; Persistent the scratch buffer
-(use-package persistent-scratch
-  :diminish
-  :bind (:map persistent-scratch-mode-map
-         ([remap kill-buffer] . (lambda (&rest _)
-                                  (interactive)
-                                  (user-error "Scrach buffer cannot be killed")))
-         ([remap revert-buffer] . persistent-scratch-restore)
-         ([remap revert-this-buffer] . persistent-scratch-restore))
-  :hook ((after-init . persistent-scratch-autosave-mode)
-         (lisp-interaction-mode . persistent-scratch-mode)))
+;(use-package persistent-scratch
+  ;:diminish
+  ;:bind (:map persistent-scratch-mode-map
+         ;([remap kill-buffer] . (lambda (&rest _)
+                                  ;(interactive)
+                                  ;(user-error "Scrach buffer cannot be killed")))
+         ;([remap revert-buffer] . persistent-scratch-restore)
+         ;([remap revert-this-buffer] . persistent-scratch-restore))
+  ;:hook ((after-init . persistent-scratch-autosave-mode)
+         ;(lisp-interaction-mode . persistent-scratch-mode)))
 
 ;; Search tools
 ;; Writable `grep' buffer
@@ -248,148 +248,148 @@ of the buffer text to be displayed in the popup"
               (start-process "pomidor-play-sound" nil "afplay" file))))))
 
 ;; Nice writing
-(use-package olivetti
-  :diminish
-  :bind ("<f7>" . olivetti-mode)
-  :init (setq olivetti-body-width 0.618))
+;(use-package olivetti
+  ;:diminish
+  ;:bind ("<f7>" . olivetti-mode)
+  ;:init (setq olivetti-body-width 0.618))
 
 ;; Edit text for browsers with GhostText or AtomicChrome extension
-(use-package atomic-chrome
-  :hook ((emacs-startup . atomic-chrome-start-server)
-         (atomic-chrome-edit-mode . (lambda ()
-                                      "Enter edit mode and delete other windows."
-                                      (and (fboundp 'olivetti-mode)
-                                           (olivetti-mode 1))
-                                      (delete-other-windows))))
-  :init (setq atomic-chrome-buffer-open-style 'frame)
-  :config
-  (if (fboundp 'gfm-mode)
-      (setq atomic-chrome-url-major-mode-alist
-            '(("github\\.com" . gfm-mode)))))
+;(use-package atomic-chrome
+  ;:hook ((emacs-startup . atomic-chrome-start-server)
+         ;(atomic-chrome-edit-mode . (lambda ()
+                                      ;"Enter edit mode and delete other windows."
+                                      ;(and (fboundp 'olivetti-mode)
+                                           ;(olivetti-mode 1))
+                                      ;(delete-other-windows))))
+  ;:init (setq atomic-chrome-buffer-open-style 'frame)
+  ;:config
+  ;(if (fboundp 'gfm-mode)
+      ;(setq atomic-chrome-url-major-mode-alist
+            ;'(("github\\.com" . gfm-mode)))))
 
 ;; Music player
-(use-package bongo
-  :bind ("C-<f9>" . bongo)
-  :config
-  (with-eval-after-load 'dired
-    (with-no-warnings
-      (defun bongo-add-dired-files ()
-        "Add marked files to the Bongo library."
-        (interactive)
-        (bongo-buffer)
-        (let (file (files nil))
-          (dired-map-over-marks
-           (setq file (dired-get-filename)
-                 files (append files (list file)))
-           nil t)
-          (with-bongo-library-buffer
-           (mapc 'bongo-insert-file files)))
-        (bongo-switch-buffers))
-      (bind-key "b" #'bongo-add-dired-files dired-mode-map))))
+;(use-package bongo
+  ;:bind ("C-<f9>" . bongo)
+  ;:config
+  ;(with-eval-after-load 'dired
+    ;(with-no-warnings
+      ;(defun bongo-add-dired-files ()
+        ;"Add marked files to the Bongo library."
+        ;(interactive)
+        ;(bongo-buffer)
+        ;(let (file (files nil))
+          ;(dired-map-over-marks
+           ;(setq file (dired-get-filename)
+                 ;files (append files (list file)))
+           ;nil t)
+          ;(with-bongo-library-buffer
+           ;(mapc 'bongo-insert-file files)))
+        ;(bongo-switch-buffers))
+      ;(bind-key "b" #'bongo-add-dired-files dired-mode-map))))
 
 ;; Process
-(use-package proced
-  :ensure nil
-  :init
-  (setq-default proced-format 'verbose)
-  (setq proced-auto-update-flag t
-        proced-auto-update-interval 3))
+;(use-package proced
+  ;:ensure nil
+  ;:init
+  ;(setq-default proced-format 'verbose)
+  ;(setq proced-auto-update-flag t
+        ;proced-auto-update-interval 3))
 
 ;; Search
-(use-package webjump
-  :ensure nil
-  :bind ("C-c /" . webjump)
-  :init (setq webjump-sites
-              '(;; Emacs
-                ("Emacs Home Page" .
-                 "www.gnu.org/software/emacs/emacs.html")
-                ("Xah Emacs Site" . "ergoemacs.org/index.html")
-                ("(or emacs irrelevant)" . "oremacs.com")
-                ("Mastering Emacs" .
-                 "https://www.masteringemacs.org/")
-
-                ;; Search engines.
-                ("DuckDuckGo" .
-                 [simple-query "duckduckgo.com"
-                               "duckduckgo.com/?q=" ""])
-                ("Google" .
-                 [simple-query "www.google.com"
-                               "www.google.com/search?q=" ""])
-                ("Bing" .
-                 [simple-query "www.bing.com"
-                               "www.bing.com/search?q=" ""])
-
-                ("Baidu" .
-                 [simple-query "www.baidu.com"
-                               "www.baidu.com/s?wd=" ""])
-                ("Wikipedia" .
-                 [simple-query "wikipedia.org" "wikipedia.org/wiki/" ""]))))
+;(use-package webjump
+  ;:ensure nil
+  ;:bind ("C-c /" . webjump)
+  ;:init (setq webjump-sites
+              ;'(;; Emacs
+                ;("Emacs Home Page" .
+                 ;"www.gnu.org/software/emacs/emacs.html")
+                ;("Xah Emacs Site" . "ergoemacs.org/index.html")
+                ;("(or emacs irrelevant)" . "oremacs.com")
+                ;("Mastering Emacs" .
+                 ;"https://www.masteringemacs.org/")
+;
+                ;;; Search engines.
+                ;("DuckDuckGo" .
+                 ;[simple-query "duckduckgo.com"
+                               ;"duckduckgo.com/?q=" ""])
+                ;("Google" .
+                 ;[simple-query "www.google.com"
+                               ;"www.google.com/search?q=" ""])
+                ;("Bing" .
+                 ;[simple-query "www.bing.com"
+                               ;"www.bing.com/search?q=" ""])
+;
+                ;("Baidu" .
+                 ;[simple-query "www.baidu.com"
+                               ;"www.baidu.com/s?wd=" ""])
+                ;("Wikipedia" .
+                 ;[simple-query "wikipedia.org" "wikipedia.org/wiki/" ""]))))
 
 ;; IRC
-(use-package erc
-  :ensure nil
-  :defines erc-autojoin-channels-alist
-  :init (setq erc-rename-buffers t
-              erc-interpret-mirc-color t
-              erc-lurker-hide-list '("JOIN" "PART" "QUIT")
-              erc-autojoin-channels-alist '(("freenode.net" "#emacs"))))
+;(use-package erc
+  ;:ensure nil
+  ;:defines erc-autojoin-channels-alist
+  ;:init (setq erc-rename-buffers t
+              ;erc-interpret-mirc-color t
+              ;erc-lurker-hide-list '("JOIN" "PART" "QUIT")
+              ;erc-autojoin-channels-alist '(("freenode.net" "#emacs"))))
 
 ;; Browse devdocs.io documents using EWW
-(when emacs/>=27p
-  (use-package devdocs-browser))
+;(when emacs/>=27p
+  ;(use-package devdocs-browser))
 
 ;; A stackoverflow and its sisters' sites reader
-(when emacs/>=26p
-  (use-package howdoyou
-    :bind (:map howdoyou-mode-map
-           ("q" . kill-buffer-and-window))
-    :hook (howdoyou-mode . read-only-mode)))
+;(when emacs/>=26p
+  ;(use-package howdoyou
+    ;:bind (:map howdoyou-mode-map
+           ;("q" . kill-buffer-and-window))
+    ;:hook (howdoyou-mode . read-only-mode)))
 
 ;; text mode directory tree
-(use-package ztree
-  :custom-face
-  (ztreep-header-face ((t (:inherit diff-header))))
-  (ztreep-arrow-face ((t (:inherit font-lock-comment-face))))
-  (ztreep-leaf-face ((t (:inherit diff-index))))
-  (ztreep-node-face ((t (:inherit font-lock-variable-name-face))))
-  (ztreep-expand-sign-face ((t (:inherit font-lock-function-name-face))))
-  (ztreep-diff-header-face ((t (:inherit (diff-header bold)))))
-  (ztreep-diff-header-small-face ((t (:inherit diff-file-header))))
-  (ztreep-diff-model-normal-face ((t (:inherit font-lock-doc-face))))
-  (ztreep-diff-model-ignored-face ((t (:inherit font-lock-doc-face :strike-through t))))
-  (ztreep-diff-model-diff-face ((t (:inherit diff-removed))))
-  (ztreep-diff-model-add-face ((t (:inherit diff-nonexistent))))
-  :pretty-hydra
-  ((:title (pretty-hydra-title "Ztree" 'octicon "diff" :face 'all-the-icons-green :height 1.1 :v-adjust 0)
-    :color pink :quit-key "q")
-   ("Diff"
-    (("C" ztree-diff-copy "copy" :exit t)
-     ("h" ztree-diff-toggle-show-equal-files "show/hide equals" :exit t)
-     ("H" ztree-diff-toggle-show-filtered-files "show/hide ignores" :exit t)
-     ("D" ztree-diff-delete-file "delete" :exit t)
-     ("v" ztree-diff-view-file "view" :exit t)
-     ("d" ztree-diff-simple-diff-files "simple diff" :exit t)
-     ("r" ztree-diff-partial-rescan "partial rescan" :exit t)
-     ("R" ztree-diff-full-rescan "full rescan" :exit t))
-    "View"
-    (("RET" ztree-perform-action "expand/collapse or view" :exit t)
-     ("SPC" ztree-perform-soft-action "expand/collapse or view in other" :exit t)
-     ("TAB" ztree-jump-side "jump side" :exit t)
-     ("g" ztree-refresh-buffer "refresh" :exit t)
-     ("x" ztree-toggle-expand-subtree "expand/collapse" :exit t)
-     ("<backspace>" ztree-move-up-in-tree "go to parent" :exit t))))
-  :bind (:map ztreediff-mode-map
-         ("C-<f5>" . ztree-hydra/body))
-  :init (setq ztree-draw-unicode-lines t
-              ztree-show-number-of-children t))
+;(use-package ztree
+  ;:custom-face
+  ;(ztreep-header-face ((t (:inherit diff-header))))
+  ;(ztreep-arrow-face ((t (:inherit font-lock-comment-face))))
+  ;(ztreep-leaf-face ((t (:inherit diff-index))))
+  ;(ztreep-node-face ((t (:inherit font-lock-variable-name-face))))
+  ;(ztreep-expand-sign-face ((t (:inherit font-lock-function-name-face))))
+  ;(ztreep-diff-header-face ((t (:inherit (diff-header bold)))))
+  ;(ztreep-diff-header-small-face ((t (:inherit diff-file-header))))
+  ;(ztreep-diff-model-normal-face ((t (:inherit font-lock-doc-face))))
+  ;(ztreep-diff-model-ignored-face ((t (:inherit font-lock-doc-face :strike-through t))))
+  ;(ztreep-diff-model-diff-face ((t (:inherit diff-removed))))
+  ;(ztreep-diff-model-add-face ((t (:inherit diff-nonexistent))))
+  ;:pretty-hydra
+  ;((:title (pretty-hydra-title "Ztree" 'octicon "diff" :face 'all-the-icons-green :height 1.1 :v-adjust 0)
+    ;:color pink :quit-key "q")
+   ;("Diff"
+    ;(("C" ztree-diff-copy "copy" :exit t)
+     ;("h" ztree-diff-toggle-show-equal-files "show/hide equals" :exit t)
+     ;("H" ztree-diff-toggle-show-filtered-files "show/hide ignores" :exit t)
+     ;("D" ztree-diff-delete-file "delete" :exit t)
+     ;("v" ztree-diff-view-file "view" :exit t)
+     ;("d" ztree-diff-simple-diff-files "simple diff" :exit t)
+     ;("r" ztree-diff-partial-rescan "partial rescan" :exit t)
+     ;("R" ztree-diff-full-rescan "full rescan" :exit t))
+    ;"View"
+    ;(("RET" ztree-perform-action "expand/collapse or view" :exit t)
+     ;("SPC" ztree-perform-soft-action "expand/collapse or view in other" :exit t)
+     ;("TAB" ztree-jump-side "jump side" :exit t)
+     ;("g" ztree-refresh-buffer "refresh" :exit t)
+     ;("x" ztree-toggle-expand-subtree "expand/collapse" :exit t)
+     ;("<backspace>" ztree-move-up-in-tree "go to parent" :exit t))))
+  ;:bind (:map ztreediff-mode-map
+         ;("C-<f5>" . ztree-hydra/body))
+  ;:init (setq ztree-draw-unicode-lines t
+              ;ztree-show-number-of-children t))
 
 ;; Misc
 (use-package copyit)                    ; copy path, url, etc.
 (use-package diffview)                  ; side-by-side diff view
-(use-package esup)                      ; Emacs startup profiler
+;(use-package esup)                      ; Emacs startup profiler
 (use-package focus)                     ; Focus on the current region
-(use-package list-environment)
-(use-package memory-usage)
+;(use-package list-environment)
+;(use-package memory-usage)
 (unless sys/win32p
   (use-package daemons)                 ; system services/daemons
   (use-package tldr))

@@ -64,10 +64,10 @@
     (exec-path-from-shell-initialize)))
 
 ;; Start server
-(use-package server
-  :ensure nil
-  :if centaur-server
-  :hook (after-init . server-mode))
+;(use-package server
+  ;:ensure nil
+  ;:if centaur-server
+  ;:hook (after-init . server-mode))
 
 ;; History
 (use-package saveplace
