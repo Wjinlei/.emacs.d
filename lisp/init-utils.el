@@ -307,7 +307,6 @@ of the buffer text to be displayed in the popup"
                 ;("(or emacs irrelevant)" . "oremacs.com")
                 ;("Mastering Emacs" .
                  ;"https://www.masteringemacs.org/")
-;
                 ;;; Search engines.
                 ;("DuckDuckGo" .
                  ;[simple-query "duckduckgo.com"
@@ -318,7 +317,6 @@ of the buffer text to be displayed in the popup"
                 ;("Bing" .
                  ;[simple-query "www.bing.com"
                                ;"www.bing.com/search?q=" ""])
-;
                 ;("Baidu" .
                  ;[simple-query "www.baidu.com"
                                ;"www.baidu.com/s?wd=" ""])
