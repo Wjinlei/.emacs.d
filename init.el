@@ -74,6 +74,7 @@ decrease this. If you experience stuttering, increase this.")
 (require 'init-package)
 
 ;; Preferences
+(require 'init-evil)
 (require 'init-basic)
 (require 'init-hydra)
 ;
