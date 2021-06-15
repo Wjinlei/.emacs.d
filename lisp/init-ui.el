@@ -2,7 +2,7 @@
 
 ;; This is CentaurEmacs config with my private modificatons
 ;; https://github.com/seagle0128/.emacs.d/
-;; It just adds Evil (vim) and some minor modifications to suit my needs 
+;; It just adds Evil (vim) and some minor modifications to suit my needs
 
 ;;; Code:
 
@@ -469,6 +469,11 @@
         (set-char-table-range composition-ligature-table (car char-regexp)
                               `([,(cdr char-regexp) 0 font-shape-gstring]))))
     (set-char-table-parent composition-ligature-table composition-function-table)))
+
+;; Hide toolbar,menubar,scrollbar
+(tool-bar-mode 0)
+(scroll-bar-mode 0)
+(menu-bar-mode 0)
 
 (provide 'init-ui)
 
