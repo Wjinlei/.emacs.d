@@ -1,1 +1,14 @@
+# windsurf
 .windsurfrules
+
+# Emacs generated files / Emacs 生成的文件
+elpa/
+eln-cache/
+auto-save-list/
+*.elc
+*~
+\#*\#
+.\#*
+
+# Ignore `custom.el` because it is a user-defined configuration file and it was copied from `example.custom.el`.
+custom.el
