@@ -21,6 +21,17 @@ doom-monokai-pro, doom-dracula, doom-gruvbox, doom-nord, etc."
   :group 'mint
   :type 'symbol)
 
+;; Font settings / 字体设置
+(defcustom mint-font "Fira Code"
+  "The default font family. / 默认字体。"
+  :group 'mint
+  :type 'string)
+
+(defcustom mint-font-size 14
+  "The default font size. / 默认字体大小。"
+  :group 'mint
+  :type 'integer)
+
 ;; Custom file path / 自定义文件路径
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 

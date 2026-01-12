@@ -5,10 +5,11 @@
 elpa/
 eln-cache/
 auto-save-list/
+transient/
 *.elc
 *~
 \#*\#
 .\#*
 
-# Ignore `custom.el` because it is a user-defined configuration file and it was copied from `example.custom.el`.
+# Ignore `custom.el` because it is a user-defined configuration file and it was copied from `custom-example.el`.
 custom.el

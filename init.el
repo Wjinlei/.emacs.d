@@ -47,13 +47,25 @@
 ;; Load custom variables first / 首先加载自定义变量
 (require 'init-custom)
 
-;; Load custom.el if exists (user customizations)
+;; Load custom.el (user customizations)
 ;; 加载 custom.el（用户自定义配置）
-(when (file-exists-p custom-file)
-  (load custom-file))
+;; If custom.el doesn't exist, copy from custom-example.el
+;; 如果 custom.el 不存在，从 custom-example.el 复制
+(let ((custom-example (expand-file-name "custom-example.el" user-emacs-directory)))
+  (unless (file-exists-p custom-file)
+    (when (file-exists-p custom-example)
+      (copy-file custom-example custom-file)))
+  (when (file-exists-p custom-file)
+    (load custom-file)))
 
 ;; Load UI/Theme / 加载 UI/主题
 (require 'init-ui)
+
+;; Load Evil mode / 加载 Evil 模式
+(require 'init-evil)
+
+;; Load VCS (Git) / 加载版本控制 (Git)
+(require 'init-vcs)
 
 ;; Restore GC threshold after startup / 启动完成后恢复 GC 阈值
 (add-hook 'emacs-startup-hook

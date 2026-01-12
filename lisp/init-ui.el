@@ -10,6 +10,21 @@
 
 (require 'init-custom)
 
+;; Font configuration / 字体配置
+(defun mint-setup-fonts ()
+  "Setup fonts. / 设置字体。"
+  (interactive)
+  (when (display-graphic-p)
+    ;; Default font / 默认字体
+    (when (member mint-font (font-family-list))
+      (set-face-attribute 'default nil
+                          :family mint-font
+                          :height (* mint-font-size 10)))))
+
+;; Setup fonts on frame creation / 创建窗口时设置字体
+(add-hook 'after-init-hook #'mint-setup-fonts)
+(add-hook 'server-after-make-frame-hook #'mint-setup-fonts)
+
 ;; Theme installation function / 主题安装函数
 (defun mint-install-themes ()
   "Install doom-themes package if not already installed.
