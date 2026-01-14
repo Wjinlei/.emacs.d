@@ -30,6 +30,41 @@
                   dired-mode))
     (add-to-list 'evil-emacs-state-modes mode)))
 
+;; Custom keybindings / 自定义快捷键
+(with-eval-after-load 'evil
+  ;; J/K -> half page scroll / 半页滚动
+  (define-key evil-normal-state-map (kbd "J") 'evil-scroll-down)
+  (define-key evil-normal-state-map (kbd "K") 'evil-scroll-up)
+  (define-key evil-visual-state-map (kbd "J") 'evil-scroll-down)
+  (define-key evil-visual-state-map (kbd "K") 'evil-scroll-up)
+  ;; H/L -> word movement / 单词移动
+  (define-key evil-normal-state-map (kbd "H") 'evil-backward-word-begin)
+  (define-key evil-normal-state-map (kbd "L") 'evil-forward-word-end)
+  ;; C-l -> end of line / 行尾
+  (define-key evil-normal-state-map (kbd "C-l") 'evil-end-of-line)
+  (define-key evil-visual-state-map (kbd "C-l") 'evil-end-of-line)
+  ;; C-h -> first non-blank / 行首（第一个非空白字符）
+  (define-key evil-normal-state-map (kbd "C-h") 'evil-first-non-blank)
+  (define-key evil-visual-state-map (kbd "C-h") 'evil-first-non-blank)
+  ;; w -> save / 保存
+  (define-key evil-normal-state-map (kbd "w") 'save-buffer)
+  (define-key evil-visual-state-map (kbd "w") 'save-buffer)
+  ;; W -> save and quit / 保存并退出
+  (define-key evil-normal-state-map (kbd "W") 'save-buffers-kill-emacs)
+  (define-key evil-visual-state-map (kbd "W") 'save-buffers-kill-emacs)
+  ;; Macro recording / 宏录制
+  ;; x -> start/stop recording macro (like vim's q) / 开始/停止录制宏
+  (define-key evil-normal-state-map (kbd "x") 'evil-record-macro)
+  ;; X -> execute macro in register x / 执行寄存器x中的宏
+  (define-key evil-normal-state-map (kbd "X") (kbd "@x"))
+  ;; Buffer/Emacs exit / 退出
+  ;; q -> kill current buffer / 关闭当前buffer
+  (define-key evil-normal-state-map (kbd "q") (lambda () (interactive) (kill-buffer (current-buffer))))
+  (define-key evil-visual-state-map (kbd "q") (lambda () (interactive) (kill-buffer (current-buffer))))
+  ;; Q -> quit emacs without saving / 强制退出emacs
+  (define-key evil-normal-state-map (kbd "Q") 'kill-emacs)
+  (define-key evil-visual-state-map (kbd "Q") 'kill-emacs))
+
 ;; Evil collection - additional keybindings / 额外的按键绑定
 (use-package evil-collection
   :ensure t
