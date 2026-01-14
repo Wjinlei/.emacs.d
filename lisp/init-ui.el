@@ -65,6 +65,11 @@
     (setq mint-theme theme)
     (mint-load-theme)))
 
+;; Make certain buffers grossly incandescent / 让某些缓冲区更亮眼
+(use-package solaire-mode
+  :ensure t
+  :hook (after-init . solaire-global-mode))
+
 ;; Use doom-themes / 使用 doom-themes
 (use-package doom-themes
   :ensure t
@@ -77,6 +82,39 @@
   (load-theme mint-theme t)
   ;; Enable flashing mode-line on errors / 错误时闪烁模式栏
   (doom-themes-visual-bell-config))
+
+;; Mode-line / 模式栏
+(use-package doom-modeline
+  :ensure t
+  :hook (after-init . doom-modeline-mode)
+  :init
+  (setq doom-modeline-icon t
+        doom-modeline-minor-modes nil
+        doom-modeline-height 25))
+
+;; Icons / 图标
+(use-package nerd-icons
+  :ensure t
+  :config
+  ;; Install nerd fonts automatically only in GUI / 仅在 GUI 中自动安装 nerd 字体
+  (when (display-graphic-p)
+    (unless (member "Symbols Nerd Font Mono" (font-family-list))
+      (nerd-icons-install-fonts t))))
+
+;; Show line numbers / 显示行号
+(use-package display-line-numbers
+  :ensure nil
+  :hook ((prog-mode conf-mode yaml-mode) . display-line-numbers-mode)
+  :init (setq display-line-numbers-width-start t))
+
+;; Easily adjust the font size in all frames / 轻松调整所有窗口的字体大小
+(use-package default-text-scale
+  :ensure t
+  :hook (after-init . default-text-scale-mode)
+  :bind (:map default-text-scale-mode-map
+         ("C-=" . default-text-scale-increase)
+         ("C--" . default-text-scale-decrease)
+         ("C-0" . default-text-scale-reset)))
 
 (provide 'init-ui)
 

@@ -10,6 +10,7 @@ transient/
 *~
 \#*\#
 .\#*
+places
 
 # Ignore `custom.el` because it is a user-defined configuration file and it was copied from `custom-example.el`.
 custom.el

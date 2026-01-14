@@ -58,6 +58,9 @@
   (when (file-exists-p custom-file)
     (load custom-file)))
 
+;; Load core functionality / 加载基础功能
+(require 'init-base)
+
 ;; Load UI/Theme / 加载 UI/主题
 (require 'init-ui)
 
