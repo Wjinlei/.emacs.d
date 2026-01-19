@@ -70,6 +70,9 @@
 ;; Load VCS (Git) / 加载版本控制 (Git)
 (require 'init-vcs)
 
+;; Load Dired / 加载文件管理
+(require 'init-dired)
+
 ;; Restore GC threshold after startup / 启动完成后恢复 GC 阈值
 (add-hook 'emacs-startup-hook
           (lambda ()

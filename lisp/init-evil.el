@@ -26,44 +26,33 @@
   (dolist (mode '(custom-mode
                   eshell-mode
                   term-mode
-                  calculator-mode
-                  dired-mode))
+                  calculator-mode))
     (add-to-list 'evil-emacs-state-modes mode)))
 
 ;; Custom keybindings / 自定义快捷键
 (with-eval-after-load 'evil
-  ;; J/K -> half page scroll / 半页滚动
+  (define-key evil-normal-state-map (kbd "C-l") 'evil-end-of-line)
+  (define-key evil-visual-state-map (kbd "C-l") 'evil-end-of-line)
+  (define-key evil-normal-state-map (kbd "C-h") 'evil-first-non-blank)
+  (define-key evil-visual-state-map (kbd "C-h") 'evil-first-non-blank)
   (define-key evil-normal-state-map (kbd "J") 'evil-scroll-down)
   (define-key evil-normal-state-map (kbd "K") 'evil-scroll-up)
   (define-key evil-visual-state-map (kbd "J") 'evil-scroll-down)
   (define-key evil-visual-state-map (kbd "K") 'evil-scroll-up)
-  ;; H/L -> word movement / 单词移动
   (define-key evil-normal-state-map (kbd "H") 'evil-backward-word-begin)
   (define-key evil-normal-state-map (kbd "L") 'evil-forward-word-end)
-  ;; C-l -> end of line / 行尾
-  (define-key evil-normal-state-map (kbd "C-l") 'evil-end-of-line)
-  (define-key evil-visual-state-map (kbd "C-l") 'evil-end-of-line)
-  ;; C-h -> first non-blank / 行首（第一个非空白字符）
-  (define-key evil-normal-state-map (kbd "C-h") 'evil-first-non-blank)
-  (define-key evil-visual-state-map (kbd "C-h") 'evil-first-non-blank)
-  ;; w -> save / 保存
   (define-key evil-normal-state-map (kbd "w") 'save-buffer)
   (define-key evil-visual-state-map (kbd "w") 'save-buffer)
-  ;; W -> save and quit / 保存并退出
-  (define-key evil-normal-state-map (kbd "W") 'save-buffers-kill-emacs)
-  (define-key evil-visual-state-map (kbd "W") 'save-buffers-kill-emacs)
-  ;; Macro recording / 宏录制
+  (define-key evil-normal-state-map (kbd "W") 'save-buffer)
+  (define-key evil-visual-state-map (kbd "W") 'save-buffer)
+  (define-key evil-normal-state-map (kbd "q") 'kill-buffer-and-window)
+  (define-key evil-visual-state-map (kbd "q") 'kill-buffer-and-window)
+  (define-key evil-normal-state-map (kbd "Q") 'kill-buffer-and-window)
+  (define-key evil-visual-state-map (kbd "Q") 'kill-buffer-and-window))
+  ;; Macro recording / 宏录制，按两下x开始录制，再按一次x停止录制，按大写X执行宏
   ;; x -> start/stop recording macro (like vim's q) / 开始/停止录制宏
   (define-key evil-normal-state-map (kbd "x") 'evil-record-macro)
-  ;; X -> execute macro in register x / 执行寄存器x中的宏
   (define-key evil-normal-state-map (kbd "X") (kbd "@x"))
-  ;; Buffer/Emacs exit / 退出
-  ;; q -> kill current buffer / 关闭当前buffer
-  (define-key evil-normal-state-map (kbd "q") (lambda () (interactive) (kill-buffer (current-buffer))))
-  (define-key evil-visual-state-map (kbd "q") (lambda () (interactive) (kill-buffer (current-buffer))))
-  ;; Q -> quit emacs without saving / 强制退出emacs
-  (define-key evil-normal-state-map (kbd "Q") 'kill-emacs)
-  (define-key evil-visual-state-map (kbd "Q") 'kill-emacs))
 
 ;; Evil collection - additional keybindings / 额外的按键绑定
 (use-package evil-collection
@@ -71,7 +60,76 @@
   :after evil
   :demand t
   :config
-  (evil-collection-init))
+  ;; Only enable for specific modes to avoid conflicts
+  ;; 仅为特定模式启用以避免冲突
+  (setq evil-collection-mode-list
+        '(dired
+          magit
+          ibuffer
+          info
+          help
+          custom
+          ediff
+          compile
+          comint))
+  (evil-collection-init)
+
+  ;; Dired keybindings using evil-define-key (spacemacs style)
+  ;; 使用 evil-define-key 定义 Dired 快捷键（spacemacs 风格）
+  (with-eval-after-load 'dired
+    ;; Define helper functions (from spacemacs vinegar layer)
+    ;; 定义辅助函数（来自 spacemacs vinegar 层）
+    (defun mint/dired-back-to-top ()
+      "Move to first file in dired. / 移动到第一个文件"
+      (interactive)
+      (goto-char (point-min))
+      (while (and (not (eobp))
+                  (not (dired-move-to-filename)))
+        (forward-line 1)))
+
+    (defun mint/dired-jump-to-bottom ()
+      "Move to last file in dired. / 移动到最后一个文件"
+      (interactive)
+      (goto-char (point-max))
+      (while (and (not (bobp))
+                  (not (dired-move-to-filename)))
+        (forward-line -1)))
+
+    (defun mint/dired-move-up ()
+      "Move to previous file, stay on first if at top. / 移动到上一个文件"
+      (interactive)
+      (dired-previous-line 1)
+      (when (bobp) (dired-next-line 1)))
+
+    (defun mint/dired-move-down ()
+      "Move to next file, stay on last if at bottom. / 移动到下一个文件"
+      (interactive)
+      (dired-next-line 1)
+      (when (eobp) (dired-next-line -1)))
+
+    ;; Navigation / 导航
+    (evil-define-key 'normal dired-mode-map
+      "h" 'dired-up-directory
+      "l" 'dired-find-file
+      "j" 'mint/dired-move-down
+      "k" 'mint/dired-move-up
+      "o" 'dired-find-file-other-window
+      "r" 'revert-buffer
+      "gg" 'mint/dired-back-to-top
+      "G" 'mint/dired-jump-to-bottom
+      ;; Editing / 编辑
+      "i" 'wdired-change-to-wdired-mode
+      "a" 'wdired-change-to-wdired-mode
+      ;; Exit / 退出
+      "q" 'quit-window
+      "Q" 'quit-window
+      ;; Search / 搜索
+      "n" 'evil-search-next
+      "N" 'evil-search-previous
+      ;; Plugin keybindings / 插件快捷键
+      "S" 'dired-quick-sort
+      "." 'dired-git-info-mode
+      (kbd "C-c C-r") 'dired-rsync)))
 
 ;; Evil escape - use jj to escape / 使用 jj 退出插入模式
 (use-package evil-escape
