@@ -32,9 +32,12 @@
         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 (package-initialize)
 
+;; Refresh package contents if needed / 刷新包列表（如果需要）
+(unless package-archive-contents
+  (package-refresh-contents))
+
 ;; Bootstrap use-package / 初始化 use-package
 (unless (package-installed-p 'use-package)
-  (package-refresh-contents)
   (package-install 'use-package))
 
 (eval-when-compile
@@ -43,6 +46,17 @@
 (setq use-package-always-ensure t
       use-package-always-defer t
       use-package-expand-minimally t)
+
+;; Auto refresh package list when install fails / 安装失败时自动刷新包列表
+(defun mint--package-install-refresh-contents (&rest args)
+  "Refresh package contents before install if not already done."
+  (package-refresh-contents))
+
+(advice-add 'package-install :before
+            (lambda (pkg &rest _)
+              (unless (package-installed-p pkg)
+                (unless package--downloads-in-progress
+                  (package-refresh-contents)))))
 
 ;; Load custom variables first / 首先加载自定义变量
 (require 'init-custom)
@@ -72,6 +86,9 @@
 
 ;; Load Dired / 加载文件管理
 (require 'init-dired)
+
+;; Load Completion (Consult, Vertico, Marginalia) / 加载补全系统
+(require 'init-completion)
 
 ;; Restore GC threshold after startup / 启动完成后恢复 GC 阈值
 (add-hook 'emacs-startup-hook
