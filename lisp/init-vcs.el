@@ -15,14 +15,28 @@
 ;; Magit - Git interface / Git 界面
 (use-package magit
   :ensure t
-  :commands (magit-status magit-dispatch magit-file-dispatch)
-  :bind (("C-x g" . magit-status)
-         ("C-x M-g" . magit-dispatch)
-         ("C-c M-g" . magit-file-dispatch))
+  :commands (magit-status magit-dispatch magit-file-dispatch
+             magit-clone magit-init magit-blame
+             magit-log-buffer-file magit-diff
+             magit-stage-file magit-unstage-file)
+  :bind (;; Basic bindings / 基础绑定
+         ("C-c g s" . magit-status)
+         ("C-c g b" . magit-blame)
+         ("C-c g c" . magit-clone)
+         ("C-c g i" . magit-init)
+         ("C-c g m" . magit-dispatch)
+         ("C-c g d" . magit-diff)
+         ("C-c g l" . magit-log-buffer-file)
+         ("C-c g S" . magit-stage-file)
+         ("C-c g U" . magit-unstage-file)
+         ("C-c g f" . magit-file-dispatch))
   :config
   ;; Show fine differences for all displayed diff hunks
   ;; 显示所有差异块的细微差异
-  (setq magit-diff-refine-hunk 'all))
+  (setq magit-diff-refine-hunk 'all)
+  ;; Restore window configuration when quitting magit (spacemacs style)
+  ;; 退出magit时恢复窗口配置（spacemacs风格）
+  (setq magit-bury-buffer-function #'magit-restore-window-configuration))
 
 ;; Show git changes in the gutter / 在边栏显示 git 更改
 (use-package diff-hl
