@@ -23,6 +23,8 @@
   :ensure t
   :custom (vertico-count 15)
   :bind (:map vertico-map
+         ("C-j" . vertico-next)
+         ("C-k" . vertico-previous)
          ("RET" . vertico-directory-enter)
          ("DEL" . vertico-directory-delete-char)
          ("M-DEL" . vertico-directory-delete-word))
@@ -50,6 +52,7 @@
 
          ;; C-x bindings / C-x 绑定
          ("C-x b"   . consult-buffer)
+         ("C-x f"   . find-file)
 
          ;; Yank / 粘贴
          ("M-y"     . consult-yank-pop)
