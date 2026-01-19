@@ -60,7 +60,7 @@
          ;; Remap bindings / 重映射绑定
          ([remap Info-search]        . consult-info)
          ([remap isearch-forward]    . consult-line)
-         ([remap recentf-open-files] . consult-recent-file)
+         ([remap recentf-open-files] . consult-recent-file))
 
   :hook (completion-list-mode . consult-preview-at-point-mode)
 
