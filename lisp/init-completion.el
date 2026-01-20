@@ -47,14 +47,7 @@
 ;; Consult - 增强的补全读取
 (use-package consult
   :ensure t
-  :bind (;; C-c bindings / C-c 绑定
-         ("C-c i"   . consult-imenu)
-
-         ;; C-x bindings / C-x 绑定
-         ("C-x b"   . consult-buffer)
-         ("C-x f"   . find-file)
-
-         ;; Yank / 粘贴
+  :bind (;; Yank / 粘贴
          ("M-y"     . consult-yank-pop)
 
          ;; M-s bindings (search-map) / M-s 绑定（搜索）

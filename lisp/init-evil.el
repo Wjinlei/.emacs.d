@@ -31,6 +31,7 @@
 
 ;; Custom keybindings / 自定义快捷键
 (with-eval-after-load 'evil
+  (define-key evil-normal-state-map (kbd "C-.") 'consult-imenu)
   (define-key evil-normal-state-map (kbd "C-l") 'evil-end-of-line)
   (define-key evil-visual-state-map (kbd "C-l") 'evil-end-of-line)
   (define-key evil-normal-state-map (kbd "C-h") 'evil-first-non-blank)
@@ -48,7 +49,10 @@
   (define-key evil-normal-state-map (kbd "q") 'kill-buffer-and-window)
   (define-key evil-visual-state-map (kbd "q") 'kill-buffer-and-window)
   (define-key evil-normal-state-map (kbd "Q") 'kill-buffer-and-window)
-  (define-key evil-visual-state-map (kbd "Q") 'kill-buffer-and-window))
+  (define-key evil-visual-state-map (kbd "Q") 'kill-buffer-and-window)
+  ;; Quick file/buffer access / 快速文件/buffer访问
+  (define-key evil-normal-state-map (kbd "ff") 'find-file)
+  (define-key evil-normal-state-map (kbd "bb") 'consult-buffer))
   ;; Macro recording / 宏录制，按两下x开始录制，再按一次x停止录制，按大写X执行宏
   ;; x -> start/stop recording macro (like vim's q) / 开始/停止录制宏
   (define-key evil-normal-state-map (kbd "x") 'evil-record-macro)
