@@ -179,7 +179,13 @@
   :demand t
   :init
   (setq evil-escape-key-sequence "jj"
-        evil-escape-delay 0.2)
+        evil-escape-delay 0.2
+        evil-escape-excluded-major-modes '(magit-mode
+                                           magit-status-mode
+                                           magit-diff-mode
+                                           magit-log-mode
+                                           magit-revision-mode
+                                           magit-process-mode))
   :config
   (evil-escape-mode 1))
 
