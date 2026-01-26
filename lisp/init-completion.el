@@ -50,9 +50,6 @@
   :bind (;; Yank / 粘贴
          ("M-y"     . consult-yank-pop)
 
-         ;; M-s bindings (search-map) / M-s 绑定（搜索）
-         ("M-s l"   . consult-line)
-
          ;; Remap bindings / 重映射绑定
          ([remap Info-search]        . consult-info)
          ([remap isearch-forward]    . consult-line)
@@ -92,6 +89,69 @@
          :map minibuffer-local-completion-map
          ("C-x C-d" . consult-dir)
          ("C-x C-j" . consult-dir-jump-file)))
+
+;; Auto completion with Corfu / 使用 Corfu 自动补全
+(use-package corfu
+  :custom
+  (corfu-cycle t)                ; Enable cycling / 启用循环（到底/顶时跳转）
+  (corfu-auto t)                 ; Enable auto completion / 启用自动补全
+  (corfu-auto-prefix 2)          ; Minimum prefix length / 最小前缀长度
+  (corfu-auto-delay 0.2)         ; Delay before showing / 显示延迟
+  (corfu-count 12)               ; Number of candidates / 候选数量
+  (corfu-preview-current nil)    ; Don't preview current / 不预览当前
+  (corfu-on-exact-match nil)     ; Don't auto-insert on exact match / 精确匹配不自动插入
+  (corfu-popupinfo-delay '(0.4 . 0.2))
+  :custom-face
+  (corfu-border ((t (:inherit region :background unspecified))))
+  :bind (("M-/" . completion-at-point))  ; Manual trigger / 手动触发
+  :hook ((after-init . global-corfu-mode)
+         (global-corfu-mode . corfu-popupinfo-mode)
+         (global-corfu-mode . corfu-history-mode))
+  :config
+  ;; Keybindings in corfu-map / 补全菜单中的快捷键
+  (keymap-set corfu-map "<down>" #'corfu-next)
+  (keymap-set corfu-map "<up>" #'corfu-previous)
+  (keymap-set corfu-map "C-j" #'corfu-next)
+  (keymap-set corfu-map "C-k" #'corfu-previous)
+  (keymap-set corfu-map "C-n" #'corfu-next)
+  (keymap-set corfu-map "C-p" #'corfu-previous)
+  (keymap-set corfu-map "TAB" #'corfu-insert)
+  (keymap-set corfu-map "RET" #'corfu-insert)
+  (keymap-set corfu-map "C-g" #'corfu-quit)
+  ;; Quit completion before saving / 保存前退出补全
+  (add-hook 'before-save-hook #'corfu-quit))
+
+;; Corfu icons / Corfu 图标
+(use-package nerd-icons-corfu
+  :autoload nerd-icons-corfu-formatter
+  :after corfu
+  :init
+  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+
+;; Cape - Completion At Point Extensions / 补全扩展
+(use-package cape
+  :init
+  ;; Add useful completion sources / 添加补全源
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-keyword)
+  :config
+  ;; Make eglot capf composable / 使 eglot 补全可组合
+  (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
+  (advice-add 'eglot-completion-at-point :around #'cape-wrap-nonexclusive))
+
+;; Dabbrev configuration / Dabbrev 配置
+(use-package dabbrev
+  :ensure nil
+  :custom
+  (dabbrev-ignored-buffer-regexps '("\\.\\(?:pdf\\|jpe?g\\|png\\)\\'")))
+
+;; TAB configuration / TAB 配置
+(use-package emacs
+  :ensure nil
+  :custom
+  (tab-always-indent 'complete)  ; TAB indents or completes / TAB 缩进或补全
+  (read-extended-command-predicate #'command-completion-default-include-p))
 
 (provide 'init-completion)
 

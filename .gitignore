@@ -15,3 +15,6 @@ tramp
 
 # Ignore `custom.el` because it is a user-defined configuration file and it was copied from `custom-example.el`.
 custom.el
+
+recentf
+tree-sitter/

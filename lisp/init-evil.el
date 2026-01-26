@@ -46,17 +46,54 @@
   (define-key evil-visual-state-map (kbd "w") 'save-buffer)
   (define-key evil-normal-state-map (kbd "W") 'save-buffer)
   (define-key evil-visual-state-map (kbd "W") 'save-buffer)
-  (define-key evil-normal-state-map (kbd "q") 'kill-buffer-and-window)
-  (define-key evil-visual-state-map (kbd "q") 'kill-buffer-and-window)
-  (define-key evil-normal-state-map (kbd "Q") 'kill-buffer-and-window)
-  (define-key evil-visual-state-map (kbd "Q") 'kill-buffer-and-window)
+  (define-key evil-normal-state-map (kbd "q") 'mint/force-kill-buffer)
+  (define-key evil-visual-state-map (kbd "q") 'mint/force-kill-buffer)
+  ;; Q force quit without save prompt / Q 强制退出不提示保存
+  (defun mint/force-kill-buffer ()
+    "Kill buffer without save prompt. / 强制关闭 buffer 不提示保存。"
+    (interactive)
+    (set-buffer-modified-p nil)
+    (kill-buffer-and-window))
+  (define-key evil-normal-state-map (kbd "Q") 'mint/force-kill-buffer)
+  (define-key evil-visual-state-map (kbd "Q") 'mint/force-kill-buffer)
   ;; Quick file/buffer access / 快速文件/buffer访问
   (define-key evil-normal-state-map (kbd "ff") 'find-file)
-  (define-key evil-normal-state-map (kbd "bb") 'consult-buffer))
+  (define-key evil-normal-state-map (kbd "bb") 'consult-buffer)
+  ;; Search keybindings / 搜索快捷键
+  (define-key evil-normal-state-map (kbd "fs") 'consult-ripgrep)      ; Search files / 搜索项目下的文件
+  (define-key evil-normal-state-map (kbd "fl") 'consult-line)         ; Search buffer (line) / 当前buffer搜索
+  (define-key evil-normal-state-map (kbd "fg") 'consult-git-grep)     ; Search git files / 搜索git文件(更快) 
+  (define-key evil-normal-state-map (kbd "fh") 'consult-recent-file) ; History files / 历史文件
+  (define-key evil-normal-state-map (kbd "ft") 'mint-switch-theme)   ; Switch theme / 切换主题
+  ;; C-j/C-k: move 5 lines or navigate corfu menu / C-j/C-k 移动5行或导航补全菜单
+  (defun mint/corfu-visible-p ()
+    "Check if corfu popup is visible."
+    (and (boundp 'corfu--frame)
+         corfu--frame
+         (frame-live-p corfu--frame)
+         (frame-visible-p corfu--frame)))
+  (defun mint/smart-c-j ()
+    "Move 5 lines down, or next item in corfu menu."
+    (interactive)
+    (if (mint/corfu-visible-p)
+        (corfu-next)
+      (evil-next-line 5)))
+  (defun mint/smart-c-k ()
+    "Move 5 lines up, or previous item in corfu menu."
+    (interactive)
+    (if (mint/corfu-visible-p)
+        (corfu-previous)
+      (evil-previous-line 5)))
+  (define-key evil-normal-state-map (kbd "C-j") 'mint/smart-c-j)
+  (define-key evil-normal-state-map (kbd "C-k") 'mint/smart-c-k)
+  (define-key evil-visual-state-map (kbd "C-j") 'mint/smart-c-j)
+  (define-key evil-visual-state-map (kbd "C-k") 'mint/smart-c-k)
+  (define-key evil-insert-state-map (kbd "C-j") 'mint/smart-c-j)
+  (define-key evil-insert-state-map (kbd "C-k") 'mint/smart-c-k)
   ;; Macro recording / 宏录制，按两下x开始录制，再按一次x停止录制，按大写X执行宏
   ;; x -> start/stop recording macro (like vim's q) / 开始/停止录制宏
   (define-key evil-normal-state-map (kbd "x") 'evil-record-macro)
-  (define-key evil-normal-state-map (kbd "X") (kbd "@x"))
+  (define-key evil-normal-state-map (kbd "X") (kbd "@x")))
 
 ;; Evil collection - additional keybindings / 额外的按键绑定
 (use-package evil-collection

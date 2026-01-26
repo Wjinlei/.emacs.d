@@ -90,6 +90,25 @@
 ;; Load Completion (Consult, Vertico, Marginalia) / 加载补全系统
 (require 'init-completion)
 
+;; Load utility functions / 加载工具函数
+(require 'init-funcs)
+
+;; Load LSP (Eglot) / 加载 LSP (Eglot)
+(require 'init-lsp)
+
+;; Load code highlighting / 加载代码高亮
+(require 'init-highlight)
+
+;; Load tree-sitter / 加载 Tree-sitter
+(require 'init-treesitter)
+
+;; Load editing enhancements / 加载编辑增强
+(require 'init-edit)
+
+;; Load programming languages / 加载编程语言支持
+(require 'init-go)    ; Go language / Go 语言
+(require 'init-web)   ; Web (Vue, HTML, CSS, JS) / Web 开发
+
 ;; Restore GC threshold after startup / 启动完成后恢复 GC 阈值
 (add-hook 'emacs-startup-hook
           (lambda ()
